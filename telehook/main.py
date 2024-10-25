@@ -54,6 +54,7 @@ class TeleClient:
 
     def run(self):
         import uvicorn
+        print(self.webhook_url)
         uvicorn.run(self.app, host="0.0.0.0", port=8000)
 
 
