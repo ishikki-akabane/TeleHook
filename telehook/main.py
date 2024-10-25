@@ -4,6 +4,8 @@ import logging
 import requests
 import aiohttp
 import httpx
+import subprocess
+
 from fastapi import FastAPI, Request
 from pyngrok import ngrok
 
@@ -18,7 +20,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 class TeleClient:
     def __init__(self, token, webhook_url=None):
         self.token = token
-        self.webhook_url = webhook_url or self._setup_ngrok()
+        self.webhook_url = webhook_url or self._setup_localhost_run()
         self.app = FastAPI()
         self.handlers = []
         self.setup_routes()
@@ -28,6 +30,18 @@ class TeleClient:
         tunnel = ngrok.connect(8000)
         return tunnel.public_url
 
+    def _setup_localhost_run(self):
+        process = subprocess.Popen(
+            ['ssh', '-R', '80:localhost:8000', 'ssh.localhost.run'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        
+        for line in process.stdout:
+            if b'http' in line:
+                return line.decode().strip()
+
+    
     def set_webhook(self):
         url = f"https://api.telegram.org/bot{self.token}/setWebhook"
         response = httpx.post(url, data={"url": self.webhook_url})
