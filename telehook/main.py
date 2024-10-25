@@ -18,11 +18,9 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 
 
 class TeleClient:
-    def __init__(self, token, port=8000, webhook_url=None):
+    def __init__(self, token=None, webhook_url=None):
         self.token = token
-        self.port = port
-        self.public_ip = self._get_public_ip()
-        self.webhook_url = f"http://{self.public_ip}:{self.port}"
+        self.webhook_url = webhook_url
         
         self.app = FastAPI()
         self.handlers = []
