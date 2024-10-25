@@ -18,9 +18,12 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 
 
 class TeleClient:
-    def __init__(self, token, webhook_url=None):
+    def __init__(self, token, port=8000, webhook_url=None):
         self.token = token
-        self.webhook_url = webhook_url or self._setup_localhost_run()
+        self.port = port
+        self.public_ip = self._get_public_ip()
+        self.webhook_url = f"http://{self.public_ip}:{self.port}"
+        
         self.app = FastAPI()
         self.handlers = []
         self.setup_routes()
@@ -30,16 +33,15 @@ class TeleClient:
         tunnel = ngrok.connect(8000)
         return tunnel.public_url
 
-    def _setup_localhost_run(self):
-        process = subprocess.Popen(
-            ['ssh', '-R', '80:localhost:8000', 'ssh.localhost.run'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        
-        for line in process.stdout:
-            if b'http' in line:
-                return line.decode().strip()
+    def _get_public_ip(self):
+        try:
+            response = httpx.get("https://api.ipify.org?format=json")
+            if response.status_code == 200:
+                return response.json()["ip"]
+            else:
+                raise Exception("Failed to get public IP")
+        except Exception as e:
+            raise Exception(f"Error fetching public IP: {e}")
 
     
     def set_webhook(self):
