@@ -5,7 +5,7 @@ from telehook import TeleClient, Filters
 
 app = TeleClient(
     token="7381276983:AAF9uBsYozCj8B2_J9jwkPUj_ohDFmNPXic",
-    webhook_url="https://test-drive-555.vercel.app"
+    webhook_url="https://test-drive-555.vercel.app/"
 )
 
 
