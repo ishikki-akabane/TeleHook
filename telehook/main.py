@@ -45,9 +45,11 @@ class TeleClient:
 
     
     def set_webhook(self):
+        print(self.webhook_url)
         url = f"https://api.telegram.org/bot{self.token}/setWebhook"
         response = httpx.post(url, data={"url": self.webhook_url})
         if response.status_code != 200:
+            print(response.text)
             raise Exception("Failed to set webhook")
     
     def setup_routes(self):
