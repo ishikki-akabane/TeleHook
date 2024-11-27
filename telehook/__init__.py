@@ -4,5 +4,6 @@ from telehook.main import TeleClient, Filters
  
 __all__ = [
     "TeleClient",
+    "testclient",
     "Filters"
 ]
