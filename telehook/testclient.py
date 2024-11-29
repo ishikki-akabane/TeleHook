@@ -40,8 +40,7 @@ class testclient:
         return 'OK'
 
     def run(self):
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.app.run())
+        self.app.run())
 
 """
 # Example usage
