@@ -1,5 +1,5 @@
 # testing 
-
+"""
 from telehook import TeleClient, Filters
 
 
@@ -24,4 +24,23 @@ async def start_cmd(client, message):
 
 print("started...")
 app.run()
+"""
+
+import requests
+from telehook import testclient
+
+
+BOT_TOKEN = "7981239177:AAGvN6UJ5zgdPGaqxXYKtY5HtwelhMcxzEU"
+CHAT_ID = 7869684136
+app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook')
+    
+@app.on_raw()
+def get_raw_update(client, message):
+    text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
+    response = requests.get(url)
+    
+
+app.run()
+
 
