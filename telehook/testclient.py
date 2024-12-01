@@ -36,7 +36,7 @@ class testclient:
     def handle_update(self):
         update = request.json
         if self.raw_handler:
-            await self.raw_handler(self.client_id, update)
+            self.raw_handler(self.client_id, update)
         return 'OK'
 
     def run(self):
