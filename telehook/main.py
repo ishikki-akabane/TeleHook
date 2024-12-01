@@ -19,11 +19,7 @@ class TeleClient:
         self.token = token
         self.url = url
         self.base_url = f'https://api.telegram.org/bot{self.token}'
-        self.handlers = {
-            'message': [],
-            'edited_message': [],
-            'raw': []
-        }
+        self.handlers = {}
 
     def connect_webhook(self):
         try:
@@ -38,33 +34,36 @@ class TeleClient:
 
    
 
-    def _add_handler(self, update_type: str, filter_func=None):
+    def add_handler(self, update_type, func, filter_func=None):
+        if update_type not in self.handlers:
+            self.handlers[update_type] = []
+        self.handlers[update_type].append({"handler": func, "filter": filter_func})
+
+    def on_message(self, filter_func=None):
         def decorator(func):
-            @wraps(func)
-            def wrapper(update_data):
-                if update_type in update_data:
-                    message_data = update_data[update_type]
-                    message = Message(self, message_data)
-                    if filter_func is None or filter_func(message):
-                        func(self, message)
-            self.handlers[update_type].append((wrapper, filter_func))
+            self.add_handler('message', func, filter_func)
             return func
         return decorator
 
-    def on_message(self, filter_func=None):
-        return self._add_handler('message', filter_func)
-
     def on_edited(self, filter_func=None):
-        return self._add_handler('edited_message', filter_func)
-
-    def on_raw(self):
-        return self._add_handler('raw')
+        def decorator(func):
+            self.add_handler('edited_message', func, filter_func)
+            return func
+        return decorator
 
     def process_update(self, update_data: dict):
-        for update_type in self.handlers:
+        for update_type, handlers in self.handlers.items():
             if update_type in update_data:
-                for handler, _ in self.handlers[update_type]:
-                    handler(update_data)
+                for handler_obj in handlers:
+                    handler = handler_obj["handler"]
+                    filter_func = handler_obj["filter"]
+                    message_data = update_data[update_type]
+                    message = Message(self, message_data)
+                    if not filter_func or filter_func(message):
+                        try:
+                            handler(self, message)
+                        except Exception as e:
+                            logger.error(f"Error in handler {handler.__name__}: {e}")
 
     def send_message(self, chat_id: int, text: str):
         url = f'{self.base_url}/sendMessage'
