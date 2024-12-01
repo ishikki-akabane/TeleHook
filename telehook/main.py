@@ -21,13 +21,13 @@ class TeleClient2:
                 if filter_func is None or filter_func(update):
                     return func(update)
                 return None
-            TeleHook.handlers.append(wrapper)
+            TeleClient2.handlers.append(wrapper)
             return wrapper
         return decorator
 
     @staticmethod
     def process_update(update):
-        for handler in TeleHook.handlers:
+        for handler in TeleClient2.handlers:
             handler(update)
 
 class Filters:
