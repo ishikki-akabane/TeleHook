@@ -33,7 +33,7 @@ class testclient:
             return func
         return decorator
 
-    async def handle_update(self):
+    def handle_update(self):
         update = request.json
         if self.raw_handler:
             await self.raw_handler(self.client_id, update)
