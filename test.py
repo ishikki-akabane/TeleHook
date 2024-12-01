@@ -29,7 +29,7 @@ app.run()
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import testclient
+from telehook import TeleHook
 
 
 BOT_TOKEN = "7981239177:AAGMMiOpESwn0jXGV-P1dl4-nqQm98HSah4"
@@ -37,7 +37,7 @@ CHAT_ID = 7869684136
 
 
 app = Flask(__name__)
-TeleHook = testclient(
+TeleHookapp = TeleHook(
     token=BOT_TOKEN,
     url='https://telehook-test.vercel.app/webhook',
     client=app
@@ -50,7 +50,7 @@ def home_endpoint():
 @app.route('/webhook', methods=['POST'])
 def webhook_endpoint():
     update = request.json
-    TeleHook.webhook_function(update)
+    TeleHookapp.webhook_function(update)
 
 @app.route("/status")
 def status_endpoint():
