@@ -9,6 +9,7 @@ class testclient:
         self.app = Flask(__name__)
         self.client_id = None
         self.raw_handler = None
+        self.base_url = f'https://api.telegram.org/bot{self.token}'
 
         # Set the webhook when initializing
         self.set_webhook()
@@ -18,7 +19,7 @@ class testclient:
 
     def set_webhook(self):
         response = requests.post(
-            f'https://api.telegram.org/bot{self.token}/setWebhook',
+            f'{self.base_url}/setWebhook',
             data={'url': self.url}
         )
         if response.status_code == 200:
@@ -40,7 +41,7 @@ class testclient:
         return 'OK'
 
     def run(self):
-        self.app.run())
+        self.app.run()
 
 """
 # Example usage
