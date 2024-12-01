@@ -15,7 +15,7 @@ logger.addHandler(handler)
 
 
 class TeleClient:
-    def __init__(self, token, url):
+    def __init__(self, token: str, url: str):
         self.token = token
         self.url = url
         self.base_url = f'https://api.telegram.org/bot{self.token}'
@@ -26,13 +26,19 @@ class TeleClient:
         }
 
     def connect_webhook(self):
-        response = requests.post(
-            f'{self.base_url}/setWebhook',
-            data={'url': self.url}
-        )
-        return response.json()
+        try:
+            response = requests.post(
+                f'{self.base_url}/setWebhook',
+                data={'url': self.url}
+            )
+            response.raise_for_status()
+            return "Webhook connected successfully."
+        except requests.exceptions.RequestException as e:
+            return f"Failed to connect webhook: {e}"
 
-    def _add_handler(self, update_type, filter_func=None):
+   
+
+    def _add_handler(self, update_type: str, filter_func=None):
         def decorator(func):
             @wraps(func)
             def wrapper(update_data):
@@ -54,14 +60,14 @@ class TeleClient:
     def on_raw(self):
         return self._add_handler('raw')
 
-    def process_update(self, update_data):
+    def process_update(self, update_data: dict):
         for update_type in self.handlers:
             if update_type in update_data:
                 for handler, _ in self.handlers[update_type]:
                     handler(update_data)
 
-    def send_message(self, chat_id, text):
-        url = f'https://api.telegram.org/bot{self.token}/sendMessage'
+    def send_message(self, chat_id: int, text: str):
+        url = f'{self.base_url}/sendMessage'
         payload = {
             'chat_id': chat_id,
             'text': text,
@@ -73,14 +79,14 @@ class TeleClient:
             logger.info("Message sent successfully.")
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to send message: {e}")
-            
 
 
 class Filters:
     @staticmethod
-    def command(command):
+    def command(command: str):
         def filter_func(update):
             message = update.get('message', {})
             text = message.get('text', '')
             return text.startswith(f'/{command}')
         return filter_func
+        
