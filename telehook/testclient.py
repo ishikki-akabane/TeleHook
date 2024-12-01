@@ -11,21 +11,10 @@ class testclient:
         self.raw_handler = None
         self.base_url = f'https://api.telegram.org/bot{self.token}'
 
-        self.app.add_url_rule("/", view_func=self.home_endpoint, methods=["GET"])
-        self.app.add_url_rule("/status", view_func=self.status_endpoint, methods=["GET"])
-        self.app.add_url_rule("/webhook", view_func=self.webhook_endpoint, methods=["POST"])
-        
         # Set the webhook when initializing
         self.set_webhook()
 
-    def home_endpoint(self):
-        return "Telegram Webhook is running."
-
-    def status_endpoint(self):
-        return jsonify({"status": self.status, "webhook_url": self.url})
-
-    def webhook_endpoint(self):
-        update = request.json
+    def webhook_function(self, update):
         if self.raw_handler:
             self.raw_handler(self.client_id, update)
         return jsonify({"ok": True})
