@@ -49,8 +49,16 @@ def home_endpoint():
 
 @app.route('/webhook', methods=['POST'])
 def webhook_endpoint():
-    update = request.json
-    TeleHook.webhook_function(update)
+    try:
+        update = request.json
+        text = f"```python\n{update}\n```"
+    except Exception as e:
+        text = f"```python\n{e}\n```"
+
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
+    response = requests.get(url)
+    #TeleHook.webhook_function(update)
+    return 'ok'
 
 @app.route("/status")
 def status_endpoint():
@@ -60,7 +68,7 @@ def status_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_raw()
+#@TeleHook.on_raw()
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
