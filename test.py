@@ -36,10 +36,10 @@ BOT_TOKEN = "7981239177:AAGvN6UJ5zgdPGaqxXYKtY5HtwelhMcxzEU"
 CHAT_ID = 7869684136
 
 
-flaskapp = Flask(__name__)
+app = Flask(__name__)
 #app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook', client=flaskapp)
 
-@flaskapp.route("/")
+@app.route("/")
 def home_endpoint():
     return "Telegram Webhook is running."
 
