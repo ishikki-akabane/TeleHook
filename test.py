@@ -50,7 +50,7 @@ def webhook_endpoint():
     try:
         update = request.get_json()
         text = f"```python\n{update}\n```"
-        TeleClient2.process_update(update)
+        TeleClient.process_update(update)
     except Exception as e:
         text = f"```python\nException: {e}\n```"
 
@@ -78,7 +78,7 @@ def status_endpoint():
 
 # ====================================================================
 
-@TeleClient2.on_message(Filters.command('start'))
+@TeleClient.on_message(Filters.command('start'))
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
