@@ -16,7 +16,7 @@ class testclient:
         self.app.add_url_rule("/webhook", view_func=self.webhook_endpoint, methods=["POST"])
         
         # Set the webhook when initializing
-        self.set_webhook()
+        #self.set_webhook()
 
     def home_endpoint(self):
         return "Telegram Webhook is running."
