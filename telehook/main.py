@@ -10,26 +10,49 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 
 
 
-class TeleClient2:
-    handlers = []
+class TeleClient:
+    def __init__(self, token, url):
+        self.token = token
+        self.url = url
+        self.handlers = {
+            'message': [],
+            'edited_message': [],
+            'raw': []
+        }
 
-    @staticmethod
-    def on_message(filter_func=None):
+    def on_message(self, filter_func=None):
+        return self._add_handler('message', filter_func)
+
+    def on_edited(self, filter_func=None):
+        return self._add_handler('edited_message', filter_func)
+
+    def on_raw(self):
+        return self._add_handler('raw')
+
+    def _add_handler(self, update_type, filter_func=None):
         def decorator(func):
             @wraps(func)
             def wrapper(update):
-                if filter_func is None or filter_func(update):
-                    return func(update)
-                return None
-            TeleClient2.handlers.append(wrapper)
+                if update_type == 'raw' or (filter_func and filter_func(update)):
+                    func(self, update)
+            self.handlers[update_type].append(wrapper)
             return wrapper
         return decorator
 
-    @staticmethod
-    def process_update(update):
-        for handler in TeleClient2.handlers:
+    def process_update(self, update):
+        if 'message' in update:
+            for handler in self.handlers['message']:
+                handler(update)
+        if 'edited_message' in update:
+            for handler in self.handlers['edited_message']:
+                handler(update)
+        for handler in self.handlers['raw']:
             handler(update)
 
+
+
+    
+        
 class Filters:
     @staticmethod
     def command(command):
@@ -40,8 +63,7 @@ class Filters:
         return filter_func
 
 
-
-class TeleClient:
+class TeleClient2:
     def __init__(self, token, url):
         self.token = token
         self.url = url
