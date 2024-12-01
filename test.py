@@ -29,7 +29,7 @@ app.run()
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient2, Filters, TeleClient
+from telehook import TeleClient, Filters, #TeleClient2
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -54,6 +54,8 @@ def webhook_endpoint():
     except Exception as e:
         text = f"```python\nException: {e}\n```"
 
+    return 'ok'
+    """
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
     payload = {
         'chat_id': CHAT_ID,
@@ -69,20 +71,20 @@ def webhook_endpoint():
         response = requests.get(url)
 
     return 'ok'
+    """
 
 @app.route("/status")
 def status_endpoint():
-    return f"Status: {TeleHook.status}"
+    return f"Status: " #{TeleHook.status}"
 
 
 
 # ====================================================================
 
 @TeleClient.on_message(Filters.command('start'))
-def get_raw_update(client, message):
-    text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
-    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
-    response = requests.get(url)
+def start_cmd(client, message):
+    chat_id = message['message']['chat']['id']
+    client.send_message(chat_id, "Hi there! You've triggered the /start command.")
 
 
 
