@@ -32,13 +32,23 @@ import requests
 from telehook import testclient
 
 
-flaskapp = Flask(__name__)
-
-
 BOT_TOKEN = "7981239177:AAGvN6UJ5zgdPGaqxXYKtY5HtwelhMcxzEU"
 CHAT_ID = 7869684136
+
+
+flaskapp = Flask(__name__)
 app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook', client=flaskapp)
-    
+
+@flaskapp.route("/")
+def home_endpoint():
+    return "Telegram Webhook is running."
+
+@flaskapp.route('/webhook', methods=['POST'])
+def webhook_endpoint():
+    update = request.json
+    app.webhook_function(update)
+
+ 
 @app.on_raw()
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
