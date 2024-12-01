@@ -29,7 +29,7 @@ app.run()
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient
+from telehook import TeleClient2, Filters, TeleClient
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -77,7 +77,7 @@ def status_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_raw()
+@TeleClient2.on_message(Filters.command('start'))
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
