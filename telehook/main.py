@@ -19,7 +19,7 @@ class TeleClient:
         self.base_url = f'https://api.telegram.org/bot{self.token}'
 
         # Set the webhook when initializing
-        self.set_webhook()
+        # self.set_webhook()
 
     def webhook_function(self, update):
         if self.raw_handler:
