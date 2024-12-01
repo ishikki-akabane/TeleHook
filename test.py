@@ -29,7 +29,7 @@ app.run()
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import testclient
+#from telehook import testclient
 
 
 BOT_TOKEN = "7981239177:AAGvN6UJ5zgdPGaqxXYKtY5HtwelhMcxzEU"
@@ -43,7 +43,7 @@ flaskapp = Flask(__name__)
 def home_endpoint():
     return "Telegram Webhook is running."
 
-@flaskapp.route('/webhook', methods=['POST'])
+#@flaskapp.route('/webhook', methods=['POST'])
 def webhook_endpoint():
     update = request.json
     """app.webhook_function(update)
