@@ -81,7 +81,7 @@ def status_endpoint():
 
 # ====================================================================
 
-@TeleClient.on_message(Filters.command('start'))
+@TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
     chat_id = message['message']['chat']['id']
     client.send_message(chat_id, "Hi there! You've triggered the /start command.")
