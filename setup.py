@@ -1,7 +1,7 @@
 from setuptools import setup
 import re
 
-requirements = ["requests", "aiohttp", "asyncio"]
+requirements = ["flask", "requests", "aiohttp", "asyncio"]
     
 readme = ''
 with open("README.md", encoding="utf-8") as f:
