@@ -1,5 +1,4 @@
 from flask import Flask, request
-import asyncio
 import requests
 
 class testclient:
