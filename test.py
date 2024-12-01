@@ -37,7 +37,7 @@ CHAT_ID = 7869684136
 
 
 flaskapp = Flask(__name__)
-app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook', client=flaskapp)
+#app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook', client=flaskapp)
 
 @flaskapp.route("/")
 def home_endpoint():
@@ -46,14 +46,14 @@ def home_endpoint():
 @flaskapp.route('/webhook', methods=['POST'])
 def webhook_endpoint():
     update = request.json
-    app.webhook_function(update)
+    """app.webhook_function(update)
 
  
 @app.on_raw()
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
-    response = requests.get(url)
+    response = requests.get(url)"""
 
 flaskapp.run()
 
