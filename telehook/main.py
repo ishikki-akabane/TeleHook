@@ -20,15 +20,6 @@ class TeleClient:
             'raw': []
         }
 
-    def on_message(self, filter_func=None):
-        return self._add_handler('message', filter_func)
-
-    def on_edited(self, filter_func=None):
-        return self._add_handler('edited_message', filter_func)
-
-    def on_raw(self):
-        return self._add_handler('raw')
-
     def _add_handler(self, update_type, filter_func=None):
         def decorator(func):
             @wraps(func)
@@ -38,6 +29,15 @@ class TeleClient:
             self.handlers[update_type].append(wrapper)
             return wrapper
         return decorator
+        
+    def on_message(self, filter_func=None):
+        return self._add_handler('message', filter_func)
+
+    def on_edited(self, filter_func=None):
+        return self._add_handler('edited_message', filter_func)
+
+    def on_raw(self):
+        return self._add_handler('raw')
 
     def process_update(self, update):
         if 'message' in update:
