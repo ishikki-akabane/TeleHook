@@ -50,6 +50,7 @@ def webhook_endpoint():
     try:
         update = request.get_json()
         text = f"```python\n{update}\n```"
+        TeleClient2.process_update(update)
     except Exception as e:
         text = f"```python\nException: {e}\n```"
 
