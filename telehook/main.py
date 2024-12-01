@@ -1,13 +1,14 @@
-import logging
 import requests
 from functools import wraps
+import logging
 
-
-logger = logging.getLogger('TeleHook')
-logger.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
+# Set up logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 class TeleClient:
@@ -26,10 +27,10 @@ class TeleClient:
             def wrapper(update):
                 if update_type == 'raw' or (filter_func and filter_func(update)):
                     func(self, update)
-            self.handlers[update_type].append(wrapper)
-            return wrapper
+            self.handlers[update_type].append((wrapper, filter_func))
+            return func
         return decorator
-        
+
     def on_message(self, filter_func=None):
         return self._add_handler('message', filter_func)
 
@@ -41,12 +42,14 @@ class TeleClient:
 
     def process_update(self, update):
         if 'message' in update:
-            for handler in self.handlers['message']:
-                handler(update)
+            for handler, filter_func in self.handlers['message']:
+                if filter_func is None or filter_func(update):
+                    handler(update)
         if 'edited_message' in update:
-            for handler in self.handlers['edited_message']:
-                handler(update)
-        for handler in self.handlers['raw']:
+            for handler, filter_func in self.handlers['edited_message']:
+                if filter_func is None or filter_func(update):
+                    handler(update)
+        for handler, _ in self.handlers['raw']:
             handler(update)
 
     def send_message(self, chat_id, text):
@@ -64,8 +67,7 @@ class TeleClient:
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to send message: {e}")
 
-    
-        
+
 class Filters:
     @staticmethod
     def command(command):
@@ -74,6 +76,7 @@ class Filters:
             text = message.get('text', '')
             return text.startswith(f'/{command}')
         return filter_func
+
 
 
 class TeleClient2:
