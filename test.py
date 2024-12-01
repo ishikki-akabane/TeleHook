@@ -29,7 +29,7 @@ app.run()
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient, Filters, #TeleClient2
+from telehook import TeleClient, Filters #TeleClient2
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
