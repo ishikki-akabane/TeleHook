@@ -83,6 +83,8 @@ def status_endpoint():
 
 @TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=hmm'
+    response = requests.get(url)
     chat_id = message['message']['chat']['id']
     client.send_message(chat_id, "Hi there! You've triggered the /start command.")
 
