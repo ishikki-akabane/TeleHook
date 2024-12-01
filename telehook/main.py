@@ -49,7 +49,20 @@ class TeleClient:
         for handler in self.handlers['raw']:
             handler(update)
 
-
+    def send_message(self, chat_id, text):
+        url = f'https://api.telegram.org/bot{self.token}/sendMessage'
+        payload = {
+            'chat_id': chat_id,
+            'text': text,
+            'parse_mode': 'Markdown'
+        }
+        
+        try:
+            response = requests.post(url, json=payload)
+            response.raise_for_status()
+            logger.info("Message sent successfully.")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to send message: {e}")
 
     
         
