@@ -1,5 +1,6 @@
 import logging
 import requests
+from functools import wraps
 
 
 logger = logging.getLogger('TeleHook')
@@ -8,11 +9,43 @@ logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
+
+class TeleClient2:
+    handlers = []
+
+    @staticmethod
+    def on_message(filter_func=None):
+        def decorator(func):
+            @wraps(func)
+            def wrapper(update):
+                if filter_func is None or filter_func(update):
+                    return func(update)
+                return None
+            TeleHook.handlers.append(wrapper)
+            return wrapper
+        return decorator
+
+    @staticmethod
+    def process_update(update):
+        for handler in TeleHook.handlers:
+            handler(update)
+
+class Filters:
+    @staticmethod
+    def command(command):
+        def filter_func(update):
+            message = update.get('message', {})
+            text = message.get('text', '')
+            return text.startswith(f'/{command}')
+        return filter_func
+
+
+
 class TeleClient:
-    def __init__(self, token, url, client):
+    def __init__(self, token, url):
         self.token = token
         self.url = url
-        self.app = client
+        #self.app = client
         self.status = "Offline"
         self.client_id = None
         self.raw_handler = None
