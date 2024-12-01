@@ -41,7 +41,7 @@ def get_raw_update(client, message):
     response = requests.get(url)
     
 
-if __name__ == '__main__':
-    app.run()
+
+app.run()
 
 
