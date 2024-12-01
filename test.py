@@ -1,35 +1,8 @@
-# testing 
-"""
-from telehook import TeleClient, Filters
-
-
-app = TeleClient(
-    token="7381276983:AAF9uBsYozCj8B2_J9jwkPUj_ohDFmNPXic",
-    webhook_url="https://test-drive-555.vercel.app/"
-)
-
-
-
-def send_message(client, chat_id, text):
-    url = f"https://api.telegram.org/bot{client.token}/sendMessage"
-    httpx.post(url, data={"chat_id": chat_id, "text": text})
-
-
-
-@app.on_message(Filters.command("start"))
-async def start_cmd(client, message):
-    chat_id = message['chat']['id']
-    send_message(client, chat_id, "started")
-
-
-print("started...")
-app.run()
-"""
-
+# testing
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient, Filters #TeleClient2
+from telehook import TeleClient, Filters
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -73,20 +46,14 @@ def webhook_endpoint():
     return 'ok'
     """
 
-@app.route("/status")
-def status_endpoint():
-    return f"Status: " #{TeleHook.status}"
-
 
 
 # ====================================================================
 
 @TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
-    #url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=hmm'
-    #response = requests.get(url)
-    chat_id = message['message']['chat']['id']
-    client.send_message(chat_id, "Hi there! You've triggered the /start command.")
+    user_info = message.from_user
+    message.reply_text(f"hola, {user_info}")
 
 
 
