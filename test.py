@@ -55,6 +55,7 @@ def get_raw_update(client, message):
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
     response = requests.get(url)"""
 
-flaskapp.run()
+
+
 
 
