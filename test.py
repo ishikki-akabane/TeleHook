@@ -26,22 +26,25 @@ print("started...")
 app.run()
 """
 
+
+from flask import Flask, request, jsonify
 import requests
 from telehook import testclient
 
 
+flaskapp = Flask(__name__)
+
+
 BOT_TOKEN = "7981239177:AAGvN6UJ5zgdPGaqxXYKtY5HtwelhMcxzEU"
 CHAT_ID = 7869684136
-app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook')
+app = testclient(token=BOT_TOKEN, url='https://telehook-test.vercel.app/webhook', client=flaskapp)
     
 @app.on_raw()
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
     response = requests.get(url)
-    
 
-
-app.run()
+flaskapp.run()
 
 
