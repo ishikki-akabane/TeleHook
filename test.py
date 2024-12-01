@@ -35,12 +35,10 @@ from telehook import TeleClient
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
 CHAT_ID = 7869684136
 
-
 app = Flask(__name__)
 TeleHook = TeleClient(
     token=BOT_TOKEN,
-    url='https://telehook-test.vercel.app/webhook',
-    client=app
+    url='https://telehook-test.vercel.app/webhook'
 )
 
 @app.route("/")
@@ -50,14 +48,25 @@ def home_endpoint():
 @app.route('/webhook', methods=['POST'])
 def webhook_endpoint():
     try:
-        update = request.json
+        update = request.get_json()
         text = f"```python\n{update}\n```"
     except Exception as e:
-        text = f"```python\n{e}\n```"
+        text = f"```python\nException: {e}\n```"
 
-    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
-    response = requests.get(url)
-    #TeleHook.webhook_function(update)
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
+    payload = {
+        'chat_id': CHAT_ID,
+        'text': text,
+        'parse_mode': 'Markdown'
+    }
+    
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={str(e)}'
+        response = requests.get(url)
+
     return 'ok'
 
 @app.route("/status")
@@ -68,7 +77,7 @@ def status_endpoint():
 
 # ====================================================================
 
-#@TeleHook.on_raw()
+@TeleHook.on_raw()
 def get_raw_update(client, message):
     text = f"```python\nClient ID: {client}\nMessage: {message}\n```"
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown'
