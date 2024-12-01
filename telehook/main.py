@@ -2,6 +2,9 @@ import requests
 from functools import wraps
 import logging
 
+from telehook.types import Message, Chat, User
+
+
 # Set up logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -24,9 +27,12 @@ class TeleClient:
     def _add_handler(self, update_type, filter_func=None):
         def decorator(func):
             @wraps(func)
-            def wrapper(update):
-                if update_type == 'raw' or (filter_func and filter_func(update)):
-                    func(self, update)
+            def wrapper(update_data):
+                if update_type in update_data:
+                    message_data = update_data[update_type]
+                    message = Message(self, message_data)
+                    if filter_func is None or filter_func(message):
+                        func(self, message)
             self.handlers[update_type].append((wrapper, filter_func))
             return func
         return decorator
@@ -40,17 +46,11 @@ class TeleClient:
     def on_raw(self):
         return self._add_handler('raw')
 
-    def process_update(self, update):
-        if 'message' in update:
-            for handler, filter_func in self.handlers['message']:
-                if filter_func is None or filter_func(update):
-                    handler(update)
-        if 'edited_message' in update:
-            for handler, filter_func in self.handlers['edited_message']:
-                if filter_func is None or filter_func(update):
-                    handler(update)
-        for handler, _ in self.handlers['raw']:
-            handler(update)
+    def process_update(self, update_data):
+        for update_type in self.handlers:
+            if update_type in update_data:
+                for handler, _ in self.handlers[update_type]:
+                    handler(update_data)
 
     def send_message(self, chat_id, text):
         url = f'https://api.telegram.org/bot{self.token}/sendMessage'
@@ -59,7 +59,6 @@ class TeleClient:
             'text': text,
             'parse_mode': 'Markdown'
         }
-        
         try:
             response = requests.post(url, json=payload)
             response.raise_for_status()
