@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 import requests
 
 class testclient:
-    def __init__(self, token, url):
+    def __init__(self, token, url, client):
         self.token = token
         self.url = url
-        self.app = Flask(__name__)
+        self.app = client
         self.status = "Offline"
         self.client_id = None
         self.raw_handler = None
@@ -16,7 +16,7 @@ class testclient:
         self.app.add_url_rule("/webhook", view_func=self.webhook_endpoint, methods=["POST"])
         
         # Set the webhook when initializing
-        #self.set_webhook()
+        self.set_webhook()
 
     def home_endpoint(self):
         return "Telegram Webhook is running."
@@ -48,6 +48,3 @@ class testclient:
             self.status = "Online"
         else:
             self.status = f"Offline - {self.client_id}"
-            
-    def run(self):
-        self.app.run()
