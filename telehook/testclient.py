@@ -23,7 +23,7 @@ class testclient:
         )
         if response.status_code == 200:
             print('Webhook set successfully!')
-            self.client_id = response.json().get('result', {}).get('id')
+            self.client_id = response.json()
         else:
             print('Failed to set webhook.')
 
