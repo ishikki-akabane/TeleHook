@@ -34,3 +34,23 @@ class TeleClient:
         payload = {'chat_id': chat_id, 'text': text}
         response = requests.post(url, json=payload)
         return response.json()
+
+    def on_message(client):
+        def decorator(func):
+            client.add_handler('message', func)
+            return func
+        return decorator
+
+
+class Filters:
+    @staticmethod
+    def command(command: str):
+        def filter_func(message):
+            return message.text.startswith(f'/{command}')
+        return filter_func
+
+
+class Message:
+    def __init__(self, data):
+        self.chat_id = data['chat']['id']
+        self.text = data.get('text', '')
