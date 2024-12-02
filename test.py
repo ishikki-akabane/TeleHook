@@ -3,7 +3,7 @@
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient, Filters, on_message
+from telehook import TeleClient, Filters
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
