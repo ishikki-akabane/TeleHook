@@ -26,6 +26,7 @@ class TeleClient:
         """
         self.token = token
         self.url = url
+        self.api_url = f"https://api.telegram.org/bot{self.token}/"
         self.message_handlers = []
 
     def process_update(self, update):
