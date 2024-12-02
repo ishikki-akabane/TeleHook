@@ -37,7 +37,7 @@ class TeleClient:
         """
         if "message" in update:
             message = update["message"]
-            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={self.message_handlers}')
+            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={message}')
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
                     requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=2')
@@ -73,11 +73,8 @@ class Filters:
             function: A filter function.
         """
         def filter_func(message):
-            if message.text and message.text.startswith(f"/{command}"):
-                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={self.message_handlers}')
+            if hasattr(message, 'text') and message.text and message.text.startswith(f"/{command}"):
                 return True
-
-            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={self.message_handlers}')
             return False
         return filter_func
 
