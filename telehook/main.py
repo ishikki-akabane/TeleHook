@@ -35,11 +35,12 @@ class TeleClient:
         response = requests.post(url, json=payload)
         return response.json()
 
-    def on_message(client):
-        def decorator(func):
-            client.add_handler('message', func)
-            return func
-        return decorator
+
+def on_message(client):
+    def decorator(func):
+        client.add_handler('message', func)
+        return func
+    return decorator
 
 
 class Filters:
