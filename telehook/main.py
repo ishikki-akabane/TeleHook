@@ -8,9 +8,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class TeleClient:
-    def __init__(self, token: str, webhook_url: str):
+    def __init__(self, token: str, url: str):
         self.token = token
-        self.webhook_url = webhook_url
+        self.webhook_url = url
         self.base_url = f'https://api.telegram.org/bot{self.token}'
         self.handlers = defaultdict(list)  # {update_type: [(group, handler)]}
 
