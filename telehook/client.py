@@ -41,7 +41,7 @@ class TeleClient:
             try:
                 message = Message(self, update["message"])
             except Exception as e:
-                logger.error(e)
+                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
                     handler(self, message)
