@@ -37,7 +37,7 @@ class TeleClient:
         """
         if "message" in update:
             message = update["message"]
-            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=1')
+            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={message}')
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
                     requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=2')
