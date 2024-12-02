@@ -1,5 +1,8 @@
 # Message
 
+from telehook.types.user import Users
+from telehook.types.chat import Chats
+
 class Message:
     def __init__(self, client, message_data):
         self.client = client
