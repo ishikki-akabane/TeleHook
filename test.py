@@ -3,7 +3,7 @@
 
 from flask import Flask, request, jsonify
 import requests
-from telehook import TeleClient, Filters
+from telehook import TeleClient, Filters, on_message
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -52,7 +52,7 @@ def webhook_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.command('start'), group=1)
+#@TeleHook.on_message(Filters.command('start'), group=1)
 def start_cmd(client, message):
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
     payload = {
@@ -63,6 +63,12 @@ def start_cmd(client, message):
     response = requests.post(url, json=payload)
     user_info = message.from_user
     message.reply_text(f"hola, {user_info}")
+
+
+@on_message(TeleHook)
+def start_command(message):
+    if Filters.command('start')(message):
+        client.send_message(chat_id=message.chat_id, text="Hello! Welcome to our bot.")
 
 
 
