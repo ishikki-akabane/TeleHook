@@ -57,7 +57,7 @@ def start_cmd(client, message):
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
     payload = {
         'chat_id': CHAT_ID,
-        'text': message,
+        'text': "haha",
         'parse_mode': 'Markdown'
     }
     response = requests.post(url, json=payload)
