@@ -38,6 +38,7 @@ class TeleClient:
         """
         Register a new handler for a specific update type.
         """
+        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=step1')
         def decorator(func):
             @wraps(func)
             def wrapper(update_data):
@@ -90,6 +91,7 @@ class TeleClient:
 class Filters:
     @staticmethod
     def command(command: str):
+        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=step2')
         def filter_func(update):
             message = update.get('message', {})
             text = message.get('text', '')
