@@ -35,8 +35,8 @@ class TeleClient:
         Args:
             update (dict): The Telegram webhook update.
         """
-        if "message" in update:            
-            message = Message(update["message"])
+        if "message" in update:
+            message = update["message"]
             requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=1')
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
