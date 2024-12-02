@@ -39,10 +39,9 @@ class TeleClient:
             try:
                 message = Message(self, update["message"])
             except Exception as e:
-                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=error-{e}')
+                print(e)
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
-                    requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=2')
                     handler(self, message)
 
     def on_message(self, filter_func):
@@ -59,6 +58,26 @@ class TeleClient:
             self.message_handlers.append((func, filter_func))
             return func
         return decorator
+
+    def send_message(self, chat_id, text):
+        """
+        Send a message via the Telegram Bot API.
+
+        Args:
+            chat_id (int): The chat ID to send the message to.
+            text (str): The text of the message.
+        """
+        url = self.api_url + "sendMessage"
+        payload = {
+            "chat_id": chat_id,
+            "text": text,
+        }
+        try:
+            response = requests.post(url, json=payload)
+            if response.status_code != 200:
+                print("Failed to send message:", response.text)
+        except Exception as e:
+            print("Error sending message:", e)
         
 
 
