@@ -5,6 +5,9 @@ from collections import defaultdict
 
 from telehook.types import Message, Chat, User
 
+BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
+CHAT_ID = 7869684136
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
