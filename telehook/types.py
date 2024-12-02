@@ -16,7 +16,7 @@ class Chat:
         self.username = chat_data.get('username')
 
 
-class Message:
+class Messageee:
     def __init__(self, client, message_data):
         self.client = client
         self.message_id = message_data.get('message_id')
@@ -27,3 +27,13 @@ class Message:
 
     def reply_text(self, text):
         self.client.send_message(self.chat.id, text)
+
+class Message:
+    def __init__(self, client, data):
+        self.client = client
+        self.chat_id = data['chat']['id']
+        self.text = data.get('text', '')
+        self.from_user = data.get('from', {})
+
+    def reply_text(self, text: str):
+        self.client.send_message(chat_id=self.chat_id, text=text)
