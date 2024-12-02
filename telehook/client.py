@@ -40,7 +40,7 @@ class TeleClient:
             try:
                 message = Message(self, update["message"])
             except Exception as e:
-                print(e)
+                logger.error(e)
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
                     handler(self, message)
@@ -76,9 +76,9 @@ class TeleClient:
         try:
             response = requests.post(url, json=payload)
             if response.status_code != 200:
-                print("Failed to send message:", response.text)
+                logger.info("Failed to send message:", response.text)
         except Exception as e:
-            print("Error sending message:", e)
+            logger.info("Error sending message:", e)
         
 
 
