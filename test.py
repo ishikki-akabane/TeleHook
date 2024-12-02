@@ -71,6 +71,7 @@ def start_command(message):
         client.send_message(chat_id=message.chat_id, text="Hello! Welcome to our bot.")
 
 
-
+if __name__ == "__main__":
+    app.run()
 
 
