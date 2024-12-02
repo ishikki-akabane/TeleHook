@@ -55,7 +55,10 @@ def webhook_endpoint():
 @TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
     #user_info = message.from_user
-    message.reply_text(f"hola") #, {user_info}")
+    try:
+        message.reply_text(f"hola") #, {user_info}")
+    except Exception as e:
+        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
 
 if __name__ == "__main__":
