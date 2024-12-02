@@ -12,7 +12,7 @@ class Chat:
     def __init__(self, chat_data):
         self.id = chat_data.get('id')
         self.type = chat_data.get('type')
-        self.title = chat_data.get('title')
+        self.title = chat_data.get('title', None)
         self.username = chat_data.get('username', None)
 
 
@@ -22,18 +22,14 @@ class Message:
         self.message_id = message_data.get('message_id')
         self.date = message_data.get('date')
         self.text = message_data.get('text')
-        #self.chat = Chat(message_data.get('chat', {}))
-        #self.from_user = User(message_data.get('from', {}))
+        self.chat = Chat(message_data.get('chat', {}))
+        self.from_user = User(message_data.get('from', {}))
 
     def reply_text(self, text):
-        self.client.send_message(7869684136, text)
+        """
+        Sends a reply message to the same chat.
 
-class Messageee:
-    def __init__(self, client, data):
-        self.client = client
-        self.chat_id = data['chat']['id']
-        self.text = data.get('text', '')
-        self.from_user = data.get('from', {})
-
-    def reply_text(self, text: str):
-        self.client.send_message(chat_id=self.chat_id, text=text)
+        Args:
+            text (str): The text of the reply message.
+        """
+        self.client.send_message(chat_id=self.chat.id, text=text)
