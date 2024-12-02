@@ -52,7 +52,7 @@ def webhook_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.command('start'))
+@TeleHook.on_message(Filters.command('start'), group=1)
 def start_cmd(client, message):
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
     payload = {
@@ -60,7 +60,7 @@ def start_cmd(client, message):
         'text': message,
         'parse_mode': 'Markdown'
     }
-    #response = requests.post(url, json=payload)
+    response = requests.post(url, json=payload)
     user_info = message.from_user
     message.reply_text(f"hola, {user_info}")
 
