@@ -36,8 +36,10 @@ class TeleClient:
             update (dict): The Telegram webhook update.
         """
         if "message" in update:
-            message = Message(self, update["message"])
-            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={message}')
+            try:
+                message = Message(self, update["message"])
+            except Exception as e:
+                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
             for handler, filter_ in self.message_handlers:
                 if filter_(message):
                     requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text=2')
