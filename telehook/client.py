@@ -1,9 +1,10 @@
-import requests
-from collections import defaultdict
-import logging
-from functools import wraps
 
-from telehook.types import *
+
+import requests
+import logging
+
+from telehook.types.message import Message
+from telehook.filters import Filters
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -79,24 +80,4 @@ class TeleClient:
                 logger.info("Failed to send message:", response.text)
         except Exception as e:
             logger.info("Error sending message:", e)
-        
-
-
-class Filters:
-    @staticmethod
-    def command(command):
-        """
-        Filter for matching specific bot commands.
-
-        Args:
-            command (str): The command to filter for (without the leading slash).
-
-        Returns:
-            function: A filter function.
-        """
-        def filter_func(message):
-            if hasattr(message, 'text') and message.text and message.text.startswith(f"/{command}"):
-                return True
-            return False
-        return filter_func
 
