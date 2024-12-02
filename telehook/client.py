@@ -3,7 +3,7 @@
 import requests
 import logging
 
-from telehook.types.message import Message
+from telehook.types import Message
 from telehook.filters import Filters
 
 
