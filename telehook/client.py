@@ -3,6 +3,8 @@ from collections import defaultdict
 import logging
 from functools import wraps
 
+from telehook.types import *
+
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
