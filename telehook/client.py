@@ -5,6 +5,7 @@ import logging
 
 from telehook.types import Message
 from telehook.filters import Filters
+from telehook.methods import Methods
 
 
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
@@ -29,6 +30,7 @@ class TeleClient:
         self.url = url
         self.api_url = f"https://api.telegram.org/bot{self.token}/"
         self.message_handlers = []
+        self.method = Methods(self)
 
     def process_update(self, update):
         """
