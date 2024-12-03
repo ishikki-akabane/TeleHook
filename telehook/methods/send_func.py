@@ -1,5 +1,5 @@
 
-from telehook import logger
+from telehook.client import logger
 import requests
 
 
