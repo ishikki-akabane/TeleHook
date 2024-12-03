@@ -19,4 +19,4 @@ class Message:
         Args:
             text (str): The text of the reply message.
         """
-        self.client.send_message(chat_id=self.chat.id, text=text)
+        self.client.method.send_message(chat_id=self.chat.id, text=text)
