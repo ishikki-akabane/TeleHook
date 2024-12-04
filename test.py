@@ -63,8 +63,11 @@ def start_cmd(client, message):
 
 @TeleHook.on_edited(Filters.private())
 def handle_private_edit(bot, message):
-    message.reply_text(f"Edited message in private chat: {message.text}")
-
+    try:
+        message.reply_text(f"Edited message in private chat: {message.text}")
+    except Exception as e:
+        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
+    
 
 if __name__ == "__main__":
     app.run()
