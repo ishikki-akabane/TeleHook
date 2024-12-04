@@ -73,7 +73,7 @@ class TeleClient:
             return func
         return decorator
 
-    def on_edited_message(self, filter_func):
+    def on_edited(self, filter_func):
         """
         Decorator to handle edited messages with a specific filter.
 
@@ -87,24 +87,4 @@ class TeleClient:
             self.edited_message_handlers.append((func, filter_func))
             return func
         return decorator
-
-    def send_message(self, chat_id, text):
-        """
-        Send a message via the Telegram Bot API.
-
-        Args:
-            chat_id (int): The chat ID to send the message to.
-            text (str): The text of the message.
-        """
-        url = self.api_url + "sendMessage"
-        payload = {
-            "chat_id": chat_id,
-            "text": text,
-        }
-        try:
-            response = requests.post(url, json=payload)
-            if response.status_code != 200:
-                logger.info("Failed to send message:", response.text)
-        except Exception as e:
-            logger.info("Error sending message:", e)
 
