@@ -30,6 +30,7 @@ class TeleClient:
         self.url = url
         self.api_url = f"https://api.telegram.org/bot{self.token}/"
         self.message_handlers = []
+        self.edited_message_handlers = []
         self.method = Methods(self)
 
     def process_update(self, update):
@@ -48,6 +49,15 @@ class TeleClient:
                 if filter_(message):
                     handler(self, message)
 
+        elif "edited_message" in update:
+            try:
+                edited_message = Message(self, update["edited_message"])
+            except Exception as e:
+                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
+            for handler, filter_ in self.edited_message_handlers:
+                if filter_(edited_message):
+                    handler(self, edited_message)
+
     def on_message(self, filter_func):
         """
         Decorator to handle messages with a specific filter.
@@ -60,6 +70,21 @@ class TeleClient:
         """
         def decorator(func):
             self.message_handlers.append((func, filter_func))
+            return func
+        return decorator
+
+    def on_edited_message(self, filter_func):
+        """
+        Decorator to handle edited messages with a specific filter.
+
+        Args:
+            filter_func (function): A function that determines whether the handler should be called.
+
+        Returns:
+            function: The decorated function.
+        """
+        def decorator(func):
+            self.edited_message_handlers.append((func, filter_func))
             return func
         return decorator
 
