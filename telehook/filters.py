@@ -19,40 +19,40 @@ class Filters:
         return filter_func
 
     @staticmethod
-    def private():
+    def private(message):
         """
         Filter for private chats (direct messages).
 
+        Args:
+            message: The message object.
+
         Returns:
-            function: A filter function.
+            bool: True if the message is from a private chat.
         """
-        def filter_func(message):
-            return getattr(message.chat, "type", None) == "private"
-        return filter_func
+        return getattr(message.chat, "type", None) == "private"
 
     @staticmethod
     def group(message):
         """
         Filter for group chats (supergroup or group).
 
+        Args:
+            message: The message object.
+
         Returns:
-            function: A filter function.
-        """
-        """
-        def filter_func(message):
-            return getattr(message.chat, "type", None) in {"group", "supergroup"}
-        return filter_func
+            bool: True if the message is from a group or supergroup.
         """
         return getattr(message.chat, "type", None) in {"group", "supergroup"}
 
     @staticmethod
-    def all():
+    def all(message):
         """
         Filter for all chat types.
 
+        Args:
+            message: The message object.
+
         Returns:
-            function: A filter function.
+            bool: Always True.
         """
-        def filter_func(message):
-            return True
-        return filter_func
+        return True
