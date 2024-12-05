@@ -1,6 +1,40 @@
 # Filters
 
 class Filters:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, client, message):
+        """
+        Make Filters callable like Pyrogram's filters.
+
+        Args:
+            client: The Telegram client instance.
+            message: The message object.
+
+        Returns:
+            bool: Whether the filter condition is satisfied.
+        """
+        return self.func(client, message)
+
+    def __and__(self, other):
+        """
+        Combine two filters with AND logic.
+        """
+        return Filters(lambda client, message: self(client, message) and other(client, message))
+
+    def __or__(self, other):
+        """
+        Combine two filters with OR logic.
+        """
+        return Filters(lambda client, message: self(client, message) or other(client, message))
+
+    def __invert__(self):
+        """
+        Negate a filter with NOT logic.
+        """
+        return Filters(lambda client, message: not self(client, message))
+
     @staticmethod
     def command(command):
         """
@@ -10,49 +44,40 @@ class Filters:
             command (str): The command to filter for (without the leading slash).
 
         Returns:
-            function: A filter function.
+            Filters: A filter object.
         """
-        def filter_func(message):
-            if hasattr(message, 'text') and message.text and message.text.startswith(f"/{command}"):
-                return True
-            return False
-        return filter_func
+        return Filters(lambda client, message: 
+            hasattr(message, 'text') and message.text.startswith(f"/{command}"))
 
     @staticmethod
-    def private(message):
+    def private():
         """
         Filter for private chats (direct messages).
 
-        Args:
-            message: The message object.
-
         Returns:
-            bool: True if the message is from a private chat.
+            Filters: A filter object.
         """
-        return getattr(message.chat, "type", None) == "private"
+        return Filters(lambda client, message: 
+            getattr(message.chat, "type", None) == "private")
 
     @staticmethod
-    def group(message):
+    def group():
         """
         Filter for group chats (supergroup or group).
 
-        Args:
-            message: The message object.
-
         Returns:
-            bool: True if the message is from a group or supergroup.
+            Filters: A filter object.
         """
-        return getattr(message.chat, "type", None) in {"group", "supergroup"}
+        return Filters(lambda client, message: 
+            getattr(message.chat, "type", None) in {"group", "supergroup"})
 
     @staticmethod
-    def all(message):
+    def all():
         """
         Filter for all chat types.
 
-        Args:
-            message: The message object.
-
         Returns:
-            bool: Always True.
+            Filters: A filter object.
         """
-        return True
+        return Filters(lambda client, message: True)
+
