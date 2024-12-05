@@ -31,16 +31,19 @@ class Filters:
         return filter_func
 
     @staticmethod
-    def group():
+    def group(message):
         """
         Filter for group chats (supergroup or group).
 
         Returns:
             function: A filter function.
         """
+        """
         def filter_func(message):
             return getattr(message.chat, "type", None) in {"group", "supergroup"}
         return filter_func
+        """
+        return getattr(message.chat, "type", None) in {"group", "supergroup"}
 
     @staticmethod
     def all():
