@@ -62,7 +62,7 @@ class TeleClient:
     def setup_webhook(self):
         response = requests.post(
             f"{self.api_url}setWebhook",
-            data={"url": self.url}
+            data={"url": f"{self.url}/webhook"}
         )
         if response.status_code == 200:
             return response.json()
