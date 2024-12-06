@@ -39,6 +39,7 @@ class TeleClient:
         if plugins and "root" in plugins:
             self.plugins = plugins
             #self.load_plugins(plugins["root"])
+            pass
 
     def load_plugins(self, root_path=None):
         """
@@ -49,6 +50,7 @@ class TeleClient:
         """
         if root_path == None:
             root_path = self.plugins["root"]
+            
         try:
             # Import the root module
             root_module = importlib.import_module(root_path)
