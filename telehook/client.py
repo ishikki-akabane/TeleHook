@@ -60,6 +60,16 @@ class TeleClient:
         except Exception as e:
             logger.error(f"Error loading plugins: {e}")
 
+    def setup_webhook(self):
+        response = requests.post(
+            f"{self.api_url}setWebhook",
+            data={"url": self.url}
+        )
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return response.text
+
     def process_update(self, update):
         """
         Process an incoming update.
