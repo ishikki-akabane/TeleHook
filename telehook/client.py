@@ -27,7 +27,7 @@ class TeleClient:
         Args:
             token (str): Telegram Bot API token.
             url (str): Optional webhook URL for the bot.
-            plugins_path (str): Path to the plugins folder.
+            plugins (dict): Dictionary specifying plugin configuration (e.g., {"root": "server.plugins"}).
         """
         self.token = token
         self.url = url
@@ -36,29 +36,28 @@ class TeleClient:
         self.edited_message_handlers = []
         self.method = Methods(self)
 
-        if plugins_path:
-            self.load_plugins(plugins_path)
+        if plugins and "root" in plugins:
+            self.load_plugins(plugins["root"])
 
-    def load_plugins(self, plugins_path):
+    def load_plugins(self, root_path):
         """
-        Dynamically load plugins from the specified path.
+        Dynamically load plugin modules from the specified root path.
 
         Args:
-            plugins_path (str): Path to the plugins folder.
+            root_path (str): Root path for plugins, e.g., "server.plugins".
         """
-        logger.info(f"Loading plugins from {plugins_path}")
         try:
-            # Add the plugins path to the system path
-            if plugins_path not in os.sys.path:
-                os.sys.path.append(plugins_path)
-
-            # List all Python files in the plugins folder
-            for file in os.listdir(plugins_path):
-                if file.endswith(".py") and file != "__init__.py":
-                    module_name = file[:-3]  # Remove .py extension
-                    importlib.import_module(f"{plugins_path}.{module_name}")
+            # Import the root module
+            root_module = importlib.import_module(root_path)
+            # List all modules in the root
+            root_dir = os.path.dirname(root_module.__file__)
+            for filename in os.listdir(root_dir):
+                if filename.endswith(".py") and filename != "__init__.py":
+                    module_name = f"{root_path}.{filename[:-3]}"
+                    importlib.import_module(module_name)
+                    logger.info(f"Loaded plugin: {module_name}")
         except Exception as e:
-            logger.error(f"Error loading plugins: {e}")
+            logger.error(f"Failed to load plugins from {root_path}: {e}")
 
     def setup_webhook(self):
         response = requests.post(
