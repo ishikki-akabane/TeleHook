@@ -37,15 +37,18 @@ class TeleClient:
         self.method = Methods(self)
 
         if plugins and "root" in plugins:
+            self.plugins = plugins
             #self.load_plugins(plugins["root"])
 
-    def load_plugins(self, root_path):
+    def load_plugins(self, root_path=None):
         """
         Dynamically load plugin modules from the specified root path.
 
         Args:
             root_path (str): Root path for plugins, e.g., "server.plugins".
         """
+        if root_path == None:
+            root_path = self.plugins["root"]
         try:
             # Import the root module
             root_module = importlib.import_module(root_path)
