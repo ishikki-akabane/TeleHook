@@ -33,7 +33,7 @@ def webhook_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.command('start'))
+#@TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
     name = message.from_user.first_name
     try:
@@ -42,7 +42,7 @@ def start_cmd(client, message):
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
 
-@TeleHook.on_edited(Filters.private)
+#@TeleHook.on_edited(Filters.private)
 def handle_private_edit(bot, message):
     try:
         message.reply_text(f"Edited message in private chat: {message.text}")
@@ -50,7 +50,7 @@ def handle_private_edit(bot, message):
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
 
-@TeleHook.on_message(Filters.private)
+#@TeleHook.on_message(Filters.private)
 def read_message1(bot, message):
     try:
         message.reply_text(f"{message.text}")
