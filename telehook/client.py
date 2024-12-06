@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class TeleClient:
-    def __init__(self, token, url=None, plugins_path=None):
+    def __init__(self, token, url=None, plugins=None):
         """
         Initialize the TeleClient.
 
