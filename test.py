@@ -51,9 +51,17 @@ def handle_private_edit(bot, message):
 
 
 @TeleHook.on_message(Filters.private)
-def read_message(bot, message):
+def read_message1(bot, message):
     try:
         message.reply_text(f"{message.text}")
+    except Exception as e:
+        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
+
+
+@TeleHook.on_message(Filters.private)
+def read_message2(bot, message):
+    try:
+        message.reply_text(f"haha {message.text}")
     except Exception as e:
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
