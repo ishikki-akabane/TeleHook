@@ -96,7 +96,7 @@ class TeleClient:
             except Exception as e:
                 requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
             for handler, filter_ in self.edited_message_handlers:
-                if filter_(edited_message):
+                if filter_(self, edited_message):
                     handler(self, edited_message)
 
     def on_message(self, filter_func):
