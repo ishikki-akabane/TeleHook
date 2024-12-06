@@ -30,25 +30,6 @@ def webhook_endpoint():
         text = f"```python\nException: {e}\n```"
 
     return 'ok'
-    """
-    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
-    payload = {
-        'chat_id': CHAT_ID,
-        'text': text,
-        'parse_mode': 'Markdown'
-    }
-    
-    try:
-        response = requests.post(url, json=payload)
-        response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={str(e)}'
-        response = requests.get(url)
-
-    return 'ok'
-    """
-
-
 
 # ====================================================================
 
