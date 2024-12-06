@@ -49,6 +49,7 @@ class Filters:
         return Filters(lambda client, message: 
             hasattr(message, 'text') and message.text.startswith(f"/{command}"))
 
+    # Use the following filters without calling them
     @staticmethod
     def private():
         """
@@ -80,4 +81,3 @@ class Filters:
             Filters: A filter object.
         """
         return Filters(lambda client, message: True)
-
