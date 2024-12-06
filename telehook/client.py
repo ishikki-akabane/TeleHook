@@ -37,7 +37,7 @@ class TeleClient:
         self.method = Methods(self)
 
         if plugins and "root" in plugins:
-            self.load_plugins(plugins["root"])
+            #self.load_plugins(plugins["root"])
 
     def load_plugins(self, root_path):
         """
