@@ -36,10 +36,17 @@ def webhook_endpoint():
 @TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
     name = message.from_user.first_name
+    output_path = "music.mp3"
+    with open(output_path, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+
+    """
     download_link = message.text.split(None, 1)[1]
     response = requests.get(download_link, stream=True)
+    """
     try:
-        message.reply_audio(response.content) #, {user_info}")
+        message.reply_audio(output_path) #, {user_info}")
     except Exception as e:
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
