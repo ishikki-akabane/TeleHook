@@ -24,7 +24,7 @@ class send_func:
         except Exception as e:
             return
 
-    def send_audio(self, chat_id, audio_content, filename="downloaded_audio.mp3"):
+    def send_audio(self, chat_id, audio_path, filename="downloaded_audio.mp3"):
         """
         Send an audio file via the Telegram Bot API.
 
@@ -34,6 +34,7 @@ class send_func:
             filename (str): The name of the file to be sent.
         """
         url = self.client.api_url + "sendAudio"
+        """
         files = {'audio': (filename, audio_content)}
         data = {'chat_id': chat_id}
         
@@ -43,3 +44,15 @@ class send_func:
                 print(f"Failed to send audio: {response.text}")
         except Exception as e:
             print(f"An error occurred: {e}")
+
+        """
+        with open(audio_path, 'rb') as audio_file:
+            files = {'audio': audio_file}
+            data = {'chat_id': chat_id}
+            
+            try:
+                response = requests.post(url, files=files, data=data)
+                if response.status_code != 200:
+                    print(f"Failed to send audio: {response.text}")
+            except Exception as e:
+                print(f"An error occurred: {e}")
