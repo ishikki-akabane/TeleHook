@@ -24,7 +24,7 @@ class send_func:
         except Exception as e:
             return
 
-    def send_audio(self, chat_id, audio_path, filename="audio.mp3"):
+    def send_audio(self, chat_id, audio, filename="audio.mp3"):
         """
         Send an audio file via the Telegram Bot API.
 
