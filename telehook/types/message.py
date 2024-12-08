@@ -21,6 +21,16 @@ class Message:
         """
         self.client.method.send_message(chat_id=self.chat.id, text=text)
 
+    def reply_audio(self, audio):
+        """
+        Sends a reply message to the same chat.
+
+        Args:
+            text (str): The text of the reply message.
+        """
+        self.client.method.send_audio(chat_id=self.chat.id, audio_content=audio)
+        
+
 
 class EditedMessage:
     def __init__(self, client, message_data):
