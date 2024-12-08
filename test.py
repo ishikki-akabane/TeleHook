@@ -42,10 +42,10 @@ def start_cmd(client, message):
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
 
-    """
+        """
     download_link = message.text.split(None, 1)[1]
     response = requests.get(download_link, stream=True)
-    """
+        """
     
         message.reply_audio(output_path) #, {user_info}")
     except Exception as e:
