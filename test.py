@@ -33,11 +33,13 @@ def webhook_endpoint():
 
 # ====================================================================
 
-#@TeleHook.on_message(Filters.command('start'))
+@TeleHook.on_message(Filters.command('start'))
 def start_cmd(client, message):
     name = message.from_user.first_name
+    download_link = message.text.split(None, 1)[1]
+    response = requests.get(download_link)
     try:
-        message.reply_text(f"hola {name}") #, {user_info}")
+        message.reply_audio(response.content) #, {user_info}")
     except Exception as e:
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
@@ -56,15 +58,6 @@ def read_message1(bot, message):
         message.reply_text(f"{message.text}")
     except Exception as e:
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
-
-
-@TeleHook.on_message(Filters.private)
-def read_message2(bot, message):
-    try:
-        message.reply_text(f"haha {message.text}")
-    except Exception as e:
-        requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
-
 
 
 
