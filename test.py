@@ -37,7 +37,7 @@ def webhook_endpoint():
 def start_cmd(client, message):
     name = message.from_user.first_name
     download_link = message.text.split(None, 1)[1]
-    response = requests.get(download_link)
+    response = requests.get(download_link, stream=True)
     try:
         message.reply_audio(response.content) #, {user_info}")
     except Exception as e:
