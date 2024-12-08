@@ -28,7 +28,7 @@ class Message:
         Args:
             text (str): The text of the reply message.
         """
-        self.client.method.send_audio(chat_id=self.chat.id, audio_content=audio)
+        self.client.method.send_audio(chat_id=self.chat.id, audio=audio)
         
 
 
