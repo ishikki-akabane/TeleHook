@@ -65,10 +65,18 @@ class TeleClient:
             logger.error(f"Failed to load plugins from {root_path}: {e}")
 
     def setup_webhook(self):
+        # Deprecated
+        # response = requests.post(
+        #     f"{self.api_url}setWebhook",
+        #     data={"url": f"{self.url}/webhook"}
+        # )
+
+        # New
         response = requests.post(
             f"{self.api_url}setWebhook",
-            data={"url": f"{self.url}/webhook"}
+            data={"url": f"{self.url}"}
         )
+
         if response.status_code == 200:
             return response.json()
         else:
