@@ -29,6 +29,11 @@ async def webhook_endpoint():
 
     return 'ok'
 
+@app.route("/run")
+def run_endpoint():
+    result = TeleHook.setup_webhook()
+    return result
+
 # ====================================================================
 
 @TeleHook.on_message(Filters.command('start'))
@@ -40,7 +45,7 @@ async def start_cmd(client, message):
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
 
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run()
 
 
