@@ -1,7 +1,7 @@
 # testing
 
 
-from flask import Flask, request, jsonify
+from quart import Quart, request
 import requests
 from telehook import TeleClient, Filters
 
@@ -9,7 +9,7 @@ from telehook import TeleClient, Filters
 BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
 CHAT_ID = 7869684136
 
-app = Flask(__name__)
+app = Quart(__name__)
 TeleHook = TeleClient(
     token=BOT_TOKEN,
     url='https://telehook-test.vercel.app/webhook'
