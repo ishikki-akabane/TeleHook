@@ -1,10 +1,11 @@
 
 from telehook.client import logger
+import httpx
 import requests
 
 
 class send_func:
-    def send_message(self, chat_id, text):
+    async def send_message(self, chat_id, text):
         """
         Send a message via the Telegram Bot API.
 
@@ -18,7 +19,8 @@ class send_func:
             "text": text,
         }
         try:
-            response = requests.post(url, json=payload)
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload)
             if response.status_code != 200:
                 return
         except Exception as e:
