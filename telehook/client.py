@@ -1,5 +1,4 @@
 
-
 import requests
 import logging
 import os
@@ -8,10 +7,6 @@ import importlib
 from telehook.types import Message
 from telehook.filters import Filters
 from telehook.methods import Methods
-
-
-BOT_TOKEN = "7612816971:AAFeh2njq6BcCEi-xTN5bLE7qKnAnzvvHMY"
-CHAT_ID = 7869684136
 
 
 # Set up logging
@@ -38,7 +33,6 @@ class TeleClient:
 
         if plugins and "root" in plugins:
             self.plugins = plugins
-            #self.load_plugins(plugins["root"])
             pass
 
     def load_plugins(self, root_path=None):
@@ -65,13 +59,6 @@ class TeleClient:
             logger.error(f"Failed to load plugins from {root_path}: {e}")
 
     def setup_webhook(self):
-        # Deprecated
-        # response = requests.post(
-        #     f"{self.api_url}setWebhook",
-        #     data={"url": f"{self.url}/webhook"}
-        # )
-
-        # New
         response = requests.post(
             f"{self.api_url}setWebhook",
             data={"url": f"{self.url}"}
@@ -93,7 +80,7 @@ class TeleClient:
             try:
                 message = Message(self, update["message"])
             except Exception as e:
-                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
+                logger.error(f'Error in responses: {e}')
             for handler, filter_ in self.message_handlers:
                 if filter_(self, message):  # Here we pass client and message to the filter
                     handler(self, message)
@@ -102,10 +89,11 @@ class TeleClient:
             try:
                 edited_message = Message(self, update["edited_message"])
             except Exception as e:
-                requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
+                logger.error(f'Error in responses: {e}')
             for handler, filter_ in self.edited_message_handlers:
                 if filter_(self, edited_message):
                     handler(self, edited_message)
+
 
     def on_message(self, filter_func):
         """
