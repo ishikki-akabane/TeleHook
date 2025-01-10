@@ -20,10 +20,10 @@ def home_endpoint():
     return "Telegram Webhook is running."
 
 @app.route('/webhook', methods=['POST'])
-def webhook_endpoint():
+async def webhook_endpoint():
     try:
         update = request.get_json()
-        TeleHook.process_update(update)
+        await TeleHook.process_update(update)
     except Exception as e:
         print(e)
 
