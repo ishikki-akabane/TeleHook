@@ -12,14 +12,14 @@ class Message:
         self.chat = Chat(message_data.get('chat', {}))
         self.from_user = User(message_data.get('from', {}))
 
-    def reply_text(self, text):
+    async def reply_text(self, text):
         """
         Sends a reply message to the same chat.
 
         Args:
             text (str): The text of the reply message.
         """
-        self.client.method.send_message(chat_id=self.chat.id, text=text)
+        await self.client.method.send_message(chat_id=self.chat.id, text=text)
 
     def reply_audio(self, audio):
         """
