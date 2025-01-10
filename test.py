@@ -16,7 +16,7 @@ TeleHook = TeleClient(
 )
 
 @app.route("/")
-def home_endpoint():
+async def home_endpoint():
     return "Telegram Webhook is running."
 
 @app.route('/webhook', methods=['POST'])
@@ -40,9 +40,7 @@ async def start_cmd(client, message):
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
 
-
-
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
 
 
