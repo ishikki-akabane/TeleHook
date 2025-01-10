@@ -3,3 +3,4 @@ aiohttp
 requests
 flask[async]
 httpx
+quart
