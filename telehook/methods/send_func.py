@@ -18,8 +18,9 @@ class send_func:
             "text": text,
         }
         try:
-            async with httpx.AsyncClient() as client:
-                response = await client.post(url, json=payload)
+            # async with httpx.AsyncClient() as client:
+            #     response = await client.post(url, json=payload)
+            response = requests.post(url, data=payload)
             if response.status_code != 200:
                 return
         except Exception as e:
