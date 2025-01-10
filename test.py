@@ -32,10 +32,10 @@ async def webhook_endpoint():
 # ====================================================================
 
 @TeleHook.on_message(Filters.command('start'))
-def start_cmd(client, message):
+async def start_cmd(client, message):
     name = message.from_user.first_name
     try:
-        message.reply_audio("https://alpha.123tokyo.xyz/get.php/e/02/0maE8OVEUtg.mp3?cid=MmEwMTo0Zjg6YzAxMjozMmVlOjoxfE5BfERF&h=Y20nKAnS6D9XbE8uBZFuFw&s=1733648802&n=Tumne%20Humse%20Wada%20Kiya%20Tha%20%28Official%20Video%29%20Munawar%20Faruqui%20ft.%20Nazila%20_%20Saaj%20Bhatt%20_%20SD%20Gana4u&uT=R&uN=aXNoaWtraWFrYWJhbmU%3D")
+        await message.reply_text("hellooo")
     except Exception as e:
         requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={e}')
 
