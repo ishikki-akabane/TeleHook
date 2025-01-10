@@ -23,11 +23,9 @@ def home_endpoint():
 def webhook_endpoint():
     try:
         update = request.get_json()
-        text = f"```json\n{update}\n```"
-        #requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}&text={text}&parse_mode=Markdown')
         TeleHook.process_update(update)
     except Exception as e:
-        text = f"```python\nException: {e}\n```"
+        print(e)
 
     return 'ok'
 
