@@ -1,5 +1,4 @@
 
-from telehook.client import logger
 import httpx
 import requests
 
