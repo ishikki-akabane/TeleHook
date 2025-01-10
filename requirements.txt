@@ -1,5 +1,5 @@
 asyncio
 aiohttp
 requests
-flask
+flask[async]
 httpx
