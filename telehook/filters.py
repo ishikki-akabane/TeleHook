@@ -1,10 +1,13 @@
 # Filters
 
+import inspect
+
+
 class Filters:
     def __init__(self, func):
         self.func = func
 
-    def __call__(self, client, message):
+    async def __call__(self, client, message):
         """
         Make Filters callable like Pyrogram's filters.
 
@@ -15,7 +18,10 @@ class Filters:
         Returns:
             bool: Whether the filter condition is satisfied.
         """
-        return self.func(client, message)
+        if inspect.iscoroutinefunction(self.func):
+            return await self.func(client, message)
+        else:
+            return self.func(client, message)
 
     def __and__(self, other):
         """
