@@ -77,6 +77,10 @@ class Filters:
         """
         return Filters(lambda client, message: 
             getattr(message.chat, "type", None) in {"group", "supergroup"})
+    
+    @staticmethod
+    def text():
+        return Filters(lambda client, message: bool(getattr(message, 'text', None)))
 
     @staticmethod
     def all():
