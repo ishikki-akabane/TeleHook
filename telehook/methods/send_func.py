@@ -10,12 +10,6 @@ class SendFunctions:
         chat_id: Union[int, str],
         text: str,
         parse_mode: Optional[str] = None,
-        entities: Optional[list] = None,
-        disable_web_page_preview: Optional[bool] = None,
-        disable_notification: Optional[bool] = None,
-        reply_to_message_id: Optional[int] = None,
-        schedule_date: Optional[int] = None,
-        protect_content: Optional[bool] = None,
         reply_markup: Optional[Union[dict, str]] = None
     ):
         """
@@ -25,12 +19,6 @@ class SendFunctions:
             chat_id (Union[int, str]): Unique identifier for the target chat or username of the target channel.
             text (str): Text of the message to be sent, 1-4096 characters after entities parsing.
             parse_mode (Optional[str]): Mode for parsing entities in the message text.
-            entities (Optional[list]): List of special entities that appear in message text.
-            disable_web_page_preview (Optional[bool]): Disables link previews for links in this message.
-            disable_notification (Optional[bool]): Sends the message silently.
-            reply_to_message_id (Optional[int]): If the message is a reply, ID of the original message.
-            schedule_date (Optional[int]): Date when the message will be sent, Unix time.
-            protect_content (Optional[bool]): Protects the contents of the sent message from forwarding and saving.
             reply_markup (Optional[Union[dict, str]]): Additional interface options.
 
         Returns:
@@ -48,18 +36,6 @@ class SendFunctions:
         # Add optional parameters if they are provided
         if parse_mode:
             payload["parse_mode"] = parse_mode
-        if entities:
-            payload["entities"] = entities
-        if disable_web_page_preview is not None:
-            payload["disable_web_page_preview"] = disable_web_page_preview
-        if disable_notification is not None:
-            payload["disable_notification"] = disable_notification
-        if reply_to_message_id:
-            payload["reply_to_message_id"] = reply_to_message_id
-        if schedule_date:
-            payload["schedule_date"] = schedule_date
-        if protect_content is not None:
-            payload["protect_content"] = protect_content
         if reply_markup:
             payload["reply_markup"] = reply_markup
 
