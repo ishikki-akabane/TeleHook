@@ -41,7 +41,7 @@ async def run_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.caption())
+@TeleHook.on_message(Filters.all())
 async def start_cmd(client, message):
     name = message.from_user.first_name
     try:
