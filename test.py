@@ -40,7 +40,7 @@ async def run_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_edited(Filters.group)
+@TeleHook.on_message(Filters.text())
 async def start_cmd(client, message):
     name = message.from_user.first_name
     try:
