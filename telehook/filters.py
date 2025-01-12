@@ -83,6 +83,158 @@ class Filters:
     def text():
         return Filters(lambda client, message: bool(getattr(message, 'text', None)))
 
+
+    @staticmethod
+    def photo():
+        """
+        Filter for messages containing a photo.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'photo', None)))
+
+
+    @staticmethod
+    def video():
+        """
+        Filter for messages containing a video.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'video', None)))
+
+
+    @staticmethod
+    def audio():
+        """
+        Filter for messages containing an audio file.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'audio', None)))
+
+
+    @staticmethod
+    def document():
+        """
+        Filter for messages containing a document.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'document', None)))
+
+
+    @staticmethod
+    def sticker():
+        """
+        Filter for messages containing a sticker.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'sticker', None)))
+
+
+    @staticmethod
+    def animation():
+        """
+        Filter for messages containing a sticker.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'animation', None)))
+
+
+    @staticmethod
+    def voice():
+        """
+        Filter for messages containing a voice message.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'voice', None)))
+
+
+    @staticmethod
+    def caption():
+        """
+        Filter for messages with a caption.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'caption', None)))
+
+
+    @staticmethod
+    def forwarded():
+        """
+        Filter for forwarded messages.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'forward_from', None)))
+
+
+    @staticmethod
+    def reply():
+        """
+        Filter for messages that are replies to other messages.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: bool(getattr(message, 'reply_to_message', None)))
+
+
+    @staticmethod
+    def user(user_id):
+        """
+        Filter for messages from a specific user.
+
+        Args:
+            user_id (int): The user ID to filter for.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: message.from_user and message.from_user.id == user_id)
+
+    @staticmethod
+    def chat(chat_id):
+        """
+        Filter for messages from a specific chat.
+
+        Args:
+            chat_id (int): The chat ID to filter for.
+
+        Returns:
+            Filters: A filter object.
+        """
+        return Filters(lambda client, message: message.chat and message.chat.id == chat_id)
+
+    @staticmethod
+    def regex(pattern):
+        """
+        Filter for messages that match a regex pattern.
+
+        Args:
+            pattern (str): The regex pattern to match against.
+
+        Returns:
+            Filters: A filter object.
+        """
+        import re
+        return Filters(lambda client, message: message.text and re.search(pattern, message.text))
+
+
     @staticmethod
     def all():
         """
