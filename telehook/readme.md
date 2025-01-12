@@ -1,6 +1,6 @@
 # Filters
-- command
-- text
+- ✅ command
+- ✅ text
 - photo
 - video
 - audio
@@ -14,6 +14,6 @@
 - user
 - chat
 - regex
-- group
-- private
-- all
+- ✅ group
+- ✅ private
+- ✅ all
