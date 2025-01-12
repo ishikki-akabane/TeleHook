@@ -11,6 +11,14 @@ class Message:
         self.text = message_data.get('text')
         self.chat = Chat(message_data.get('chat', {}))
         self.from_user = User(message_data.get('from', {}))
+        self.photo = message_data.get('photo')
+        self.caption = message_data.get('caption')
+        self.video = message_data.get('video')
+        self.audio = message_data.get('audio')
+        self.document = message_data.get('document')
+        self.sticker = message_data.get('sticker')
+        self.animation = message_data.get('animation')
+        self.voice = message_data.get('voice')
 
     async def reply_text(self, text):
         """
