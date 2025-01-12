@@ -41,6 +41,7 @@ class Filters:
         """
         return Filters(lambda client, message: not self(client, message))
 
+
     @staticmethod
     def command(command):
         """
@@ -68,7 +69,7 @@ class Filters:
             getattr(message.chat, "type", None) == "private")
 
     @staticmethod
-    def group():
+    def group_filter():
         """
         Filter for group chats (supergroup or group).
 
