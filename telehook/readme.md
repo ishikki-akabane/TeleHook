@@ -13,7 +13,7 @@
 - reply
 - user
 - chat
-- regex
+- ✅ regex
 - ✅ group
 - ✅ private
 - ✅ all
