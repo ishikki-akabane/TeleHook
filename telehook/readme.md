@@ -1,14 +1,14 @@
 # Filters
 - ✅ command
 - ✅ text
-- photo
+- ✅ photo
 - video
 - audio
-- document
-- sticker
+- ✅ document
+- ✅ sticker
 - animation
 - voice
-- caption
+- ✅ caption
 - forwarded
 - reply
 - user
