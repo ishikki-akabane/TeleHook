@@ -48,7 +48,7 @@ async def start_cmd(client, message):
     try:
         await message.reply_text(
             f"*hellooo* {name}",
-            reply_markup=
+            parse_mode="MARKDOWN"
         )
     except Exception as e:
         print(e)
