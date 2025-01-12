@@ -69,7 +69,7 @@ class Filters:
             getattr(message.chat, "type", None) == "private")
 
     @staticmethod
-    def group_filter():
+    def group():
         """
         Filter for group chats (supergroup or group).
 
