@@ -24,6 +24,7 @@ async def home_endpoint():
 async def webhook_endpoint(request: Request):
     try:
         update = await request.json()
+        # print(update)
         await TeleHook.process_update(update)
     except Exception as e:
         print(e)
@@ -40,7 +41,7 @@ async def run_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.text())
+@TeleHook.on_message(Filters.photo)
 async def start_cmd(client, message):
     name = message.from_user.first_name
     try:
