@@ -1,11 +1,11 @@
 # Methods
 
 
-from .send_func import send_func
+from .send_func import SendFunctions
 
 
 class Methods(
-    send_func,
+    SendFunctions,
 ):
     def __init__(self, client):
         self.client = client
