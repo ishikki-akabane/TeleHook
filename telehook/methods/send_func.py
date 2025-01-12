@@ -67,7 +67,7 @@ class SendFunctions:
             async with httpx.AsyncClient() as client:
                 response = await client.post(url, json=payload)
                 response.raise_for_status()
-                return Message(self.client, response.json()["result"])
+                return # Message(self.client, response.json()["result"])
         except httpx.HTTPStatusError as e:
             error_message = f"HTTP error occurred: {e.response.status_code} - {e.response.text}"
             raise RPCError(error_message)
