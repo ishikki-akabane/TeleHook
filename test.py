@@ -13,7 +13,7 @@ app = FastAPI()
 
 TeleHook = TeleClient(
     token=BOT_TOKEN,
-    url='https://pup-solid-publicly.ngrok-free.app/webhook'
+    url='https://c395d657-c32e-4aee-8fd3-00d9782a42a2-00-13prezhyzp6r1.pike.replit.dev/webhook'
 )
 
 @app.get("/")
