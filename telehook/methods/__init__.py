@@ -14,3 +14,4 @@ class Methods(
     def test():
         return True
     
+    
