@@ -5,6 +5,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 import requests
 from telehook import TeleClient, Filters
+from telehook.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 
 BOT_TOKEN = "6599175207:AAG4Ow1nXH6LvQeQ-w8Pex6ZKJJ6BQ1WPz0"
@@ -42,13 +43,18 @@ async def run_endpoint():
 # ====================================================================
 
 @TeleHook.on_message(Filters.all())
-async def start_cmd(client, message):
+async def start_cmd(client, message: Message):
     name = message.from_user.first_name
 
     try:
         await message.reply_text(
             f"*hellooo* {name}",
-            parse_mode="MARKDOWN"
+            parse_mode="MARKDOWN",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [InlineKeyboardButton("hello", url="https://t.me/ishikki")]
+                ]
+            )
         )
     except Exception as e:
         print(e)
