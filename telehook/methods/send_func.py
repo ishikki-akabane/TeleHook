@@ -2,6 +2,7 @@
 import requests
 import httpx
 from typing import Union, Optional
+from ..types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 class SendFunctions:
