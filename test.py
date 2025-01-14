@@ -52,6 +52,7 @@ async def start_cmd(client, message: Message):
             parse_mode="MARKDOWN",
             reply_markup=InlineKeyboardMarkup(
                 [
+                    [InlineKeyboardButton("hello", url="https://t.me/ishikki")],
                     [InlineKeyboardButton("hello", url="https://t.me/ishikki")]
                 ]
             )
