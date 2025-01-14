@@ -115,7 +115,7 @@ class SendFunctions:
             "url": url,
             "cache_time": cache_time
         }
-        url = f"{self.api_url}answerCallbackQuery"
+        url = f"{self.client.api_url}answerCallbackQuery"
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=payload)
             response.raise_for_status()
