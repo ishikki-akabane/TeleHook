@@ -30,6 +30,8 @@ class TeleClient:
         self.api_url = f"https://api.telegram.org/bot{self.token}/"
         self.message_handlers = []
         self.edited_message_handlers = []
+        self.callback_query_handlers = []
+
         self.method = Methods(self)
 
         if plugins and "root" in plugins:
@@ -89,6 +91,12 @@ class TeleClient:
                 if await filter_(self, edited_message):
                     await handler(self, edited_message)
 
+        elif "callback_query" in update:
+            callback_query = CallbackQuery(self, update["callback_query"])
+            for handler, filter_ in self.callback_query_handlers:
+                if filter_ is None or await filter_(self, callback_query):
+                    await handler(self, callback_query)
+
 
     def on_message(self, filter_func):
         """
@@ -119,4 +127,21 @@ class TeleClient:
             self.edited_message_handlers.append((func, filter_func))
             return func
         return decorator
+    
+    def on_callback_query(self, filter_func=None):
+        """
+        Decorator to handle callback queries with an optional filter.
+
+        Args:
+            filter_func (function, optional): A function that determines whether the handler should be called.
+
+        Returns:
+            function: The decorated function.
+        """
+        def decorator(func):
+            self.callback_query_handlers.append((func, filter_func))
+            return func
+        return decorator
+    
+
 
