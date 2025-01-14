@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 import requests
 from telehook import TeleClient, Filters
-from telehook.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from telehook.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery
 
 
 BOT_TOKEN = "6599175207:AAG4Ow1nXH6LvQeQ-w8Pex6ZKJJ6BQ1WPz0"
@@ -63,6 +63,12 @@ async def start_cmd(client, message: Message):
         )
     except Exception as e:
         print(e)
+
+
+@TeleHook.on_callback_query()
+async def handle_callback_query(client, callback_query: CallbackQuery):
+    if callback_query.data == "hahatext":
+        await callback_query.answer("You pressed the button!")
 
 
 if __name__ == "__main__":
