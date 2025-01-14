@@ -5,7 +5,7 @@ import logging
 import os
 import importlib
 
-from telehook.types import Message
+from telehook.types import Message, CallbackQuery
 from telehook.filters import Filters
 from telehook.methods import Methods
 
