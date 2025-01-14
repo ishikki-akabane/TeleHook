@@ -3,7 +3,7 @@ import requests
 import httpx
 from typing import Union, Optional
 from ..types import InlineKeyboardButton, InlineKeyboardMarkup
-
+import json
 
 class SendFunctions:
     async def send_message(
@@ -11,7 +11,7 @@ class SendFunctions:
         chat_id: Union[int, str],
         text: str,
         parse_mode: Optional[str] = None,
-        reply_markup: Optional[Union[dict, str]] = None
+        reply_markup: InlineKeyboardMarkup = None
     ):
         """
         Send a message via the Telegram Bot API.
@@ -38,23 +38,15 @@ class SendFunctions:
         if parse_mode:
             payload["parse_mode"] = parse_mode
         if reply_markup:
-            payload["reply_markup"] = reply_markup
+            payload["reply_markup"] = json.dumps(reply_markup.to_dict())
 
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.post(url, json=payload)
                 response.raise_for_status()
                 return # Message(self.client, response.json()["result"])
-        except httpx.HTTPStatusError as e:
-            error_message = f"HTTP error occurred: {e.response.status_code} - {e.response.text}"
-            raise RPCError(error_message)
-        except httpx.RequestError as e:
-            error_message = f"An error occurred while requesting: {str(e)}"
-            raise RPCError(error_message)
         except Exception as e:
-            error_message = f"An unexpected error occurred: {str(e)}"
-            raise RPCError(error_message)
-
+            print(e)
 
     def send_audio(self, chat_id, audio, filename=None, caption=None, parse_mode=None):
         """
