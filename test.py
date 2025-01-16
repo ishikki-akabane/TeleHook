@@ -25,7 +25,6 @@ async def home_endpoint():
 async def webhook_endpoint(request: Request):
     try:
         update = await request.json()
-        print(update)
         await TeleHook.process_update(update)
     except Exception as e:
         print(e)
@@ -67,8 +66,8 @@ async def start_cmd(client, message: Message):
 
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
-    if callback_query.data == "hahatext":
-        await callback_query.answer("You pressed the button!")
+    print(callback_query)
+    await callback_query.answer("You pressed the button!")
 
 
 if __name__ == "__main__":
