@@ -103,21 +103,4 @@ class SendFunctions:
             # Close the file if opened
             if files and "audio" in files:
                 files["audio"][1].close()
-        
-    async def answer_callback_querdfdsfy(self, callback_query_id, text=None, show_alert=False, url=None, cache_time=0):
-        """
-        Answer a callback query.
-        """
-        payload = {
-            "callback_query_id": callback_query_id,
-            "text": text,
-            "show_alert": show_alert,
-            "url": url,
-            "cache_time": cache_time
-        }
-        url = f"{self.client.api_url}answerCallbackQuery"
-        async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload)
-            response.raise_for_status()
-            return response.json()
 
