@@ -2,6 +2,7 @@
 
 import uvicorn
 
+import asyncio
 from fastapi import FastAPI, Request
 import requests
 from telehook import TeleClient, Filters
@@ -42,7 +43,7 @@ async def run_endpoint():
 
 # ====================================================================
 
-@TeleHook.on_message(Filters.all())
+@TeleHook.on_message(Filters.command("start"))
 async def start_cmd(client, message: Message):
     name = message.from_user.first_name
 
@@ -52,8 +53,8 @@ async def start_cmd(client, message: Message):
             parse_mode="MARKDOWN",
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton("hello", callback_data="hahatext")],
-                    [InlineKeyboardButton("hello", callback_data="hahahatext")],
+                    [InlineKeyboardButton("hello haha", callback_data="hahatext")],
+                    [InlineKeyboardButton("hello hahaha", callback_data="hahahatext")],
                     [
                         InlineKeyboardButton("hello", url="https://t.me/ishikki"),
                         InlineKeyboardButton("hello", url="https://t.me/ishikki")
@@ -73,7 +74,15 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
     if callback_query.data == "hahahatext":
         await callback_query.answer("You pressed hahaha button!", show_alert=True)
     else:
+        await callback_query.message.edit_text("Wow")
         await callback_query.answer("You pressed haha button!", show_alert=True)
+
+
+@TeleHook.on_message(Filters.command("edit"))
+async def edit_cmd(client, message):
+    a = await message.reply_text(1)
+    await asyncio.sleep(3)
+    await a.edit_text()
 
 
 if __name__ == "__main__":
