@@ -17,3 +17,7 @@
 - ✅ group
 - ✅ private
 - ✅ all
+
+# Method
+send_message
+answer
