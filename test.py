@@ -79,8 +79,8 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
 async def edit_cmd(client, message):
     a = await message.reply_text(1)
     print(a)
-    # await asyncio.sleep(3)
-    # await a.edit_text()
+    await asyncio.sleep(3)
+    await a.edit_text("hoho")
 
 
 if __name__ == "__main__":
