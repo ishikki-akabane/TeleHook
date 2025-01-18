@@ -66,9 +66,6 @@ async def start_cmd(client, message: Message):
         print(e)
 
 
-import httpx
-
-
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
     if callback_query.data == "hahahatext":
