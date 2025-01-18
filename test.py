@@ -70,7 +70,7 @@ import httpx
 
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
-    # await callback_query.answer("You pressed the button!")
+    await callback_query.answer("You pressed the button!")
 
     spayload = {
         "callback_query_id": callback_query.id,
@@ -90,14 +90,14 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
         f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery",
         json=payload
     )
-    """
+    
     async with httpx.AsyncClient() as client:
         a = await client.post(
             f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery",
             json=spayload
         )
     print(a.text)
-    
+    """
 
 
 if __name__ == "__main__":
