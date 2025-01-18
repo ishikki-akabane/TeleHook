@@ -26,7 +26,7 @@ async def webhook_endpoint(request: Request):
     try:
         update = await request.json()
         await TeleHook.process_update(update)
-        print(update)
+        #print(update)
     except Exception as e:
         print(e)
         return {"error": str(e)}
