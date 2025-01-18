@@ -12,18 +12,26 @@ class CallbackFunctions:
             text=None,
             show_alert=False,
             url=None,
-            cache_time=0
+            cache_time=None
         ):
         """
         Answer a callback query.
         """
-        payload = {
-            "callback_query_id": callback_query_id,
-            "text": text,
-            "show_alert": show_alert,
-            "url": url,
-            "cache_time": cache_time
-        }
+        if cache_time == None:
+            payload = {
+                "callback_query_id": callback_query_id,
+                "text": text,
+                "show_alert": show_alert,
+                "url": url
+            }
+        else:
+            payload = {
+                "callback_query_id": callback_query_id,
+                "text": text,
+                "show_alert": show_alert,
+                "url": url,
+                "cache_time": cache_time
+            }
         print(payload)
         url = f"{self.client.api_url}answerCallbackQuery"
         async with httpx.AsyncClient() as client:
