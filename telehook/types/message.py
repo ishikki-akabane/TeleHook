@@ -78,7 +78,7 @@ class EditedMessage:
         self.client.method.send_message(chat_id=self.chat.id, text=text)
 
 
-class CallbackQuery:
+class CallbackQuerysffgsdg:
     def __init__(self, client, data):
         self.client = client
         self.id = data.get("id")
