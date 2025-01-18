@@ -18,7 +18,7 @@ class CallbackFunctions:
         Answer a callback query.
         """
         payload = {
-            "callback_query_id": callback_query_id,
+            "callback_query_id": int(callback_query_id),
             "text": text,
             "show_alert": show_alert,
             "url": url,
