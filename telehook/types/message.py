@@ -22,6 +22,24 @@ class Message:
         self.voice = message_data.get('voice')
 
 
+    def __str__(self):
+        attributes = [
+            f"message_id={self.message_id}",
+            f"date={self.date}",
+            f"text='{self.text[:20]}...'" if self.text else "text=None",
+            f"chat={self.chat}",
+            f"from_user={self.from_user}",
+        ]
+        media_types = ['photo', 'video', 'audio', 'document', 'sticker', 'animation', 'voice']
+        for media_type in media_types:
+            if getattr(self, media_type):
+                attributes.append(f"{media_type}=True")
+        if self.caption:
+            attributes.append(f"caption='{self.caption[:20]}...'")
+        
+        return f"Message({', '.join(attributes)})"
+
+
     async def reply_text(
         self,
         text: str,
