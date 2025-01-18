@@ -78,8 +78,9 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
 @TeleHook.on_message(Filters.command("edit"))
 async def edit_cmd(client, message):
     a = await message.reply_text(1)
-    await asyncio.sleep(3)
-    await a.edit_text()
+    print(a)
+    # await asyncio.sleep(3)
+    # await a.edit_text()
 
 
 if __name__ == "__main__":
