@@ -17,12 +17,12 @@ class CallbackFunctions:
         """
         Answer a callback query.
         """
-        if cache_time == None:
+        if url == None:
             payload = {
                 "callback_query_id": callback_query_id,
                 "text": text,
                 "show_alert": show_alert,
-                "url": url
+                "cache_time": cache_time
             }
         else:
             payload = {
@@ -32,7 +32,6 @@ class CallbackFunctions:
                 "url": url,
                 "cache_time": cache_time
             }
-        print(payload)
         url = f"{self.client.api_url}answerCallbackQuery"
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=payload)
