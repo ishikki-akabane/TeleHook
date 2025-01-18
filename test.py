@@ -75,11 +75,12 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
     spayload = {
         "callback_query_id": callback_query.id,
         "text": "text",
+        "show_alert": True
     }
     payload = {
         "callback_query_id": callback_query.id,
         "text": "text",
-        "show_alert": False,
+        "show_alert": True,
         "url": None
     }
     # print(payload)
