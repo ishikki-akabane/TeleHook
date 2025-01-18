@@ -104,7 +104,7 @@ class SendFunctions:
             if files and "audio" in files:
                 files["audio"][1].close()
         
-    async def answer_callback_query(self, callback_query_id, text=None, show_alert=False, url=None, cache_time=0):
+    async def answer_callback_querdfdsfy(self, callback_query_id, text=None, show_alert=False, url=None, cache_time=0):
         """
         Answer a callback query.
         """
