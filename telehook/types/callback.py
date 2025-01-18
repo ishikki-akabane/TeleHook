@@ -6,7 +6,7 @@ from telehook.types.message import Message
 
 class CallbackQuery:
     def __init__(self, client, data):
-        print(data)
+        #print(data)
         self.client = client
         self.id = data.get("id")
         self.from_user = User(data.get("from"))
