@@ -67,7 +67,7 @@ class Message:
         """
         return await self.client.method.edit_message_text(
             chat_id=self.chat.id,
-            message_id=self.id,
+            message_id=self.message_id,
             text=text,
             parse_mode=parse_mode,
             reply_markup=reply_markup
