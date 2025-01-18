@@ -1,6 +1,7 @@
 # Filters
 
 import inspect
+import re
 
 
 class Filters:
@@ -231,7 +232,6 @@ class Filters:
         Returns:
             Filters: A filter object.
         """
-        import re
         return Filters(lambda client, message: message.text and re.search(pattern, message.text))
 
 
