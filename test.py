@@ -67,6 +67,7 @@ async def start_cmd(client, message: Message):
 
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
+    print(callback_query.id)
     await callback_query.answer("You pressed the button!")
 
 
