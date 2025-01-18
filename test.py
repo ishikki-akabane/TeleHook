@@ -53,7 +53,7 @@ async def start_cmd(client, message: Message):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [InlineKeyboardButton("hello", callback_data="hahatext")],
-                    [InlineKeyboardButton("hello", url="https://t.me/ishikki")],
+                    [InlineKeyboardButton("hello", callback_data="hahahatext")],
                     [
                         InlineKeyboardButton("hello", url="https://t.me/ishikki"),
                         InlineKeyboardButton("hello", url="https://t.me/ishikki")
@@ -70,7 +70,10 @@ import httpx
 
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
-    await callback_query.answer("You pressed the button!", show_alert=True)
+    if callback_query.data == "hahahatext":
+        await callback_query.answer("You pressed hahaha button!", show_alert=True)
+    else:
+        await callback_query.answer("You pressed haha button!", show_alert=True)
 
 
 if __name__ == "__main__":
