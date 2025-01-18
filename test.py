@@ -67,8 +67,17 @@ async def start_cmd(client, message: Message):
 
 @TeleHook.on_callback_query()
 async def handle_callback_query(client, callback_query: CallbackQuery):
-    print(callback_query.id)
-    await callback_query.answer("You pressed the button!")
+    # await callback_query.answer("You pressed the button!")
+
+    payload = {
+        "callback_query_id": callback_query.id,
+        "text": "text",
+    }
+    a = requests.post(
+        f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery",
+        json=payload
+    )
+    print(a.text)
 
 
 if __name__ == "__main__":
