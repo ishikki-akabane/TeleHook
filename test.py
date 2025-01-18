@@ -76,7 +76,7 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
         "callback_query_id": callback_query.id,
         "text": "text",
         "show_alert": False,
-        "url": None
+        "cache_time": 0
     }
     payload = {
         "callback_query_id": callback_query.id,
