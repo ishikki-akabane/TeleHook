@@ -92,7 +92,7 @@ async def handle_callback_query(client, callback_query: CallbackQuery):
     async with httpx.AsyncClient() as client:
         a = await client.post(
             f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery",
-            json=payload
+            json=spayload
         )
     print(a.text)
     
