@@ -47,6 +47,31 @@ class Message:
             parse_mode=parse_mode,
             reply_markup=reply_markup
         )
+    
+    async def edit_text(
+        self,
+        text: str,
+        parse_mode: Optional[str] = None,
+        reply_markup: Optional[Union[dict, str]] = None
+    ):
+        """
+        Edit the text of this message.
+
+        Args:
+            text (str): New text of the message.
+            parse_mode (Optional[str]): Mode for parsing entities in the message text.
+            reply_markup (Optional[InlineKeyboardMarkup]): A JSON-serialized object for an inline keyboard.
+
+        Returns:
+            Message: The edited message.
+        """
+        return await self.client.method.edit_message_text(
+            chat_id=self.chat.id,
+            message_id=self.id,
+            text=text,
+            parse_mode=parse_mode,
+            reply_markup=reply_markup
+        )
 
     def reply_audio(self, audio):
         """
@@ -76,24 +101,4 @@ class EditedMessage:
             text (str): The text of the reply message.
         """
         self.client.method.send_message(chat_id=self.chat.id, text=text)
-
-
-class CallbackQuerysffgsdg:
-    def __init__(self, client, data):
-        self.client = client
-        self.id = data.get("id")
-        self.from_user = User(data.get("from"))
-        self.message = Message(client, data.get("message")) if data.get("message") else None
-        self.inline_message_id = data.get("inline_message_id")
-        self.chat_instance = data.get("chat_instance")
-        self.data = data.get("data")
-        self.game_short_name = data.get("game_short_name")
-
-    async def answer(self, text=None, show_alert=False, url=None, cache_time=0):
-        """
-        Answer the callback query.
-        """
-        return await self.client.method.answer_callback_query(
-            self.id, text, show_alert, url, cache_time
-        )
 
