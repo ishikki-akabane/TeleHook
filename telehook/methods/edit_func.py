@@ -1,7 +1,7 @@
 import requests
 import httpx
 from typing import Union, Optional
-from ..types import InlineKeyboardButton, InlineKeyboardMarkup
+from ..types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 import json
 
 
@@ -47,7 +47,7 @@ class EditFunctions:
             async with httpx.AsyncClient() as client:
                 response = await client.post(url, json=payload)
                 response.raise_for_status()
-                return # Message(self.client, response.json()["result"])
+                return Message(self.client, response.json()["result"])
         except Exception as e:
             print(f"Error editing message: {e}")
 
