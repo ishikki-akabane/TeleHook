@@ -19,5 +19,6 @@
 - ✅ all
 
 # Method
-send_message
+send_message (reply_text)
+edit_text (edit_text)
 answer
